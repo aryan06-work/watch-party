@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
@@ -54,7 +54,7 @@ const io = new Server(server, {
 registerSocketHandlers(io);
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.json({
     status: 'healthy',
     uptime: process.uptime(),
@@ -63,7 +63,7 @@ app.get('/health', (req, res) => {
 });
 
 // Check room info before joining
-app.get('/api/rooms/:code', (req, res) => {
+app.get('/api/rooms/:code', (req: Request, res: Response) => {
   const code = req.params.code?.toLowerCase();
   const room = store.getRoom(code);
 
@@ -89,7 +89,7 @@ app.get('/api/rooms/:code', (req, res) => {
 });
 
 // Video link validation endpoint
-app.post('/api/rooms/validate-video', (req, res) => {
+app.post('/api/rooms/validate-video', (req: Request, res: Response) => {
   const { url } = req.body || {};
   const validation = parseAndValidateVideoUrl(url);
 
