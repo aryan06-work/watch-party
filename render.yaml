@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: together-server
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: cd server && npm install && npm run build
+    startCommand: cd server && npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        sync: false
